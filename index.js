@@ -37,7 +37,11 @@ async function run() {
     const touristCollection = client.db('touristDB').collection('tourist')
 
 
-
+    app.get('/tourist', async(req, res)=>{
+      const cursor = touristCollection.find()
+      const result = await cursor.toArray()
+      res.send(result)
+  })
 
     app.post('/tourist',async(req,res)=>{
         const newTourist = req.body;
