@@ -51,7 +51,11 @@ async function run() {
     })
 
 
-
+app.get('/myList/:email', async (req,res)=>{
+  console.log(req.params.email)
+  const result = await touristCollection.find({email:req.params.email}).toArray()
+  res.send(result)
+})
 
 
 
