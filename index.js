@@ -97,7 +97,7 @@ async function run() {
     app.get("/countries", async (req, res) => {
       const cursor = countryCollection.find();
       const result = await cursor.toArray();
-      
+      console.log(result)
       res.send(result);
     });
 
@@ -107,6 +107,7 @@ async function run() {
       const result = await countryCollection
         .find({ name: req.params.name })
         .toArray();
+        console.log(result)
       res.send(result);
     });
     
