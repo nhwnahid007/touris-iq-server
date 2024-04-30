@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -57,6 +57,31 @@ app.get('/myList/:email', async (req,res)=>{
   res.send(result)
 })
 
+
+app.put('/tourist/:id', async(req, res)=>{
+  const id = req.params.id
+  const filter = {_id: new ObjectId(id)}
+  const options = {upsert: true}
+  const updatedTourist = req.body
+  const tourist = {
+      $set: {
+          spot: updatedTourist.spot,
+          country: updatedTourist.country,
+          location: updatedTourist.location,
+          description: updatedTourist.description,
+          price: updatedTourist.price,
+          season: updatedTourist.season,
+          time: updatedTourist.time,
+          number: updatedTourist.number,
+          email: updatedTourist.email,
+          name: updatedTourist.name,
+          photo: updatedTourist.photo
+      }
+  }
+
+  const result = await touristCollection.updateOne(filter, tourist, options)
+  res.send(result)
+})
 
 
 
