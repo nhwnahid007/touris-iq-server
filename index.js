@@ -35,6 +35,7 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
     const touristCollection = client.db('touristDB').collection('tourist')
+    const countryCollection = client.db('touristDB').collection('country')
 
 
     app.get('/tourist', async(req, res)=>{
@@ -92,7 +93,13 @@ app.delete('/tourist/:id', async(req, res)=>{
   res.send(result);
 })
 
+//counry related apis
 
+app.get('/countries',async (req,res)=>{
+  const cursor = countryCollection.find()
+  const countries = await cursor.toArray()
+  res.send(countries)
+})
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
